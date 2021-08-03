@@ -1,0 +1,24 @@
+<p>champion works!</p>
+<button pButton type="button" label="Click" ></button><br><br>
+<h5>Advanced</h5>
+<p-fileUpload name="myfile[]" url="./upload.php"></p-fileUpload>
+<h5>Panel</h5>
+<button type="button" pButton pRipple label="Block" (click)="blockedPanel=true"></button>
+<button type="button" pButton pRipple label="Unblock" (click)="blockedPanel=false"></button>
+
+<p-blockUI [target]="pnl" [blocked]="blockedPanel">
+    <i class="pi pi-lock" style="font-size: 3rem"></i>
+</p-blockUI>
+<p-panel #pnl header="Header" styleClass="p-mt-4">
+    <p class="p-m-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+        Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+        Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
+        cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+</p-panel>
+
+<h5>Static</h5>
+<p-progressBar [value]="value"></p-progressBar>
+
+<h5>Range: {{rangeValues[0] + ' - ' + rangeValues[1]}}</h5>
+<p-slider [(ngModel)]="rangeValues" [range]="true"></p-slider>
+
