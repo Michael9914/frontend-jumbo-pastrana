@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ChampionModel } from '../models/champion.model'
 import { ChampionHttpService } from '../services/champion-http.service';
-
 
 @Component({
   selector: 'app-champion',
@@ -9,16 +9,30 @@ import { ChampionHttpService } from '../services/champion-http.service';
   styleUrls: ['./champion.component.css'],
 })
 export class ChampionComponent implements OnInit {
-  champion: ChampionModel = {};
+  selectedChampion: ChampionModel = {};
   champions: ChampionModel[] = [];
+  formChampion:FormGroup;
 
-  constructor(private championHttpService: ChampionHttpService) {
-
+  constructor(private championHttpService: ChampionHttpService, private formBuilder:FormBuilder) {
+    this.formChampion = this.newFormGroupChampion();
   }
 
   ngOnInit() {
     this.getChampions();
     this.getChampion();
+  }
+
+  newFormGroupChampion(): FormGroup {
+    return this.formBuilder.group(
+      {
+        id:[null],
+        code:[null,[Validators.required,Validators.maxLength(5),Validators.minLength(3)]],
+        date:[null],
+        description:[null],
+        approved:[null],
+        title:[null,[Validators.required,Validators.maxLength(5),Validators.minLength(3)]],
+      }
+    )
   }
 
   getChampions(): void {
@@ -38,7 +52,7 @@ export class ChampionComponent implements OnInit {
     this.championHttpService.getOne(1).subscribe(
       response => {
         console.log(response);
-        this.champion = response['data'];
+        this.selectedChampion = response['data'];
       },
       error => {
         console.log(error);
@@ -48,10 +62,9 @@ export class ChampionComponent implements OnInit {
   }
 
   createChampion(): void {
-    this.championHttpService.create(this.champion).subscribe(
+    this.championHttpService.create(this.selectedChampion).subscribe(
       response => {
         console.log(response);
-        this.champion = response['data'];
       },
       error => {
         console.log(error);
@@ -60,29 +73,52 @@ export class ChampionComponent implements OnInit {
 
   }
 
-  update(): void {
-    this.championHttpService.update(this.champion.id, this.champion).subscribe(
+  updateChampion(champion: ChampionModel): void {
+    this.championHttpService.update(champion.id, champion).subscribe(
       response => {
         console.log(response);
-        this.champion = response['data'];
       },
       error => {
         console.log(error);
       }
     );
-
   }
 
-  deleteChampion(): void {
-    this.championHttpService.delete(this.champion.id).subscribe(
+  deleteChampion(champion: ChampionModel): void {
+    this.championHttpService.delete(champion.id).subscribe(
       response => {
         console.log(response);
-        this.champion = response['data'];
+        this.removeChampion(champion);
       },
       error => {
         console.log(error);
       }
     );
+  }
+
+  removeChampion(champion: ChampionModel){
+    this.champions = this.champions.filter(element => element.id !== champion.id);   
+}
+
+  selectChampion(champion: ChampionModel) {
+    console.log(champion);
+    this.formChampion.patchValue(champion);
+  }
+
+  onSubmit(){
+    console.log('onSubmit')
+  }
+
+  get idField(){
+    return this.formChampion.controls['id'];
+  }
+
+  get codeField(){
+    return this.formChampion.controls['code'];
+  }
+
+  get titleField(){
+    return this.formChampion.controls['title'];
   }
 
 }

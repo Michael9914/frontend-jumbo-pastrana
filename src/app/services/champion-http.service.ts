@@ -26,12 +26,12 @@ export class ChampionHttpService {
     return this.httpClient.post(url, champion);
   }
 
-  update(id: number, champion: ChampionModel) {
+  update(id: number | undefined, champion: ChampionModel) {
     const url = 'http://backend-jumbo-pastrana.test/api/v1/authentication/champions/1/lines' + id;
     return this.httpClient.put(url, champion);
   }
 
-  delete(id: number) {
+  delete(id: number | undefined) {
     const url = 'http://backend-jumbo-pastrana.test/api/v1/authentication/champions/1/lines' + id;
     return this.httpClient.delete(url);
   }

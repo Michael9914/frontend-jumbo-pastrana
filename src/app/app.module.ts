@@ -3,7 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
@@ -15,6 +15,7 @@ import {PanelModule} from 'primeng/panel';
 import {ProgressBarModule} from 'primeng/progressbar';
 import {SliderModule} from 'primeng/slider';
 import {InputTextModule} from 'primeng/inputtext';
+import {CardModule} from 'primeng/card';
 
 
 // Components
@@ -42,12 +43,14 @@ import { UnderMaintenanceComponent } from './under-maintenance/under-maintenance
     FileUploadModule,
     HttpClientModule,
     FormsModule,
+    ReactiveFormsModule,
     BrowserAnimationsModule,
     BlockUIModule,
     PanelModule,
     ProgressBarModule,
     SliderModule,
     InputTextModule,
+    CardModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
