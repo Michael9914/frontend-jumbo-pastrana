@@ -6,5 +6,5 @@ export interface LineModel{
     email?: string;
     age?: number;
     identification?: string;
-    names?: boolean;
+    names?: string;
 }

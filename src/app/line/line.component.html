@@ -1,6 +1,73 @@
 <h1>Line</h1>
-{{line | json}}
+{{formLine.value | json}}
+<p-card>
+    <ng-template pTemplate="header"><br>
+        Formulario Reactivo
+    </ng-template>
+<div class="p-fluid">
+    <form [formGroup]="formLine" (ngSubmit)="onSubmit()">
+        <div class="p-field">
+            <label for="id">ID</label>
+            <input pInputText type="text" id="id" formControlName="id" >
+        </div>
+        <div class="p-field">
+            <label for="id">NAMES</label>
+            <input pInputText type="text" id="names" formControlName="names" >
+        </div>
+        <div class="p-field">
+            <label for="id">EMAIL</label>
+            <input pInputText type="text" id="email" formControlName="email" >
+            <div
+            *ngIf="emailField.invalid && (emailField.touched || emailField.dirty)">
+            <small *ngIf="emailField.errors?.required" class="p-error">
+                El campo es requerido
+            </small>
+            <small *ngIf="emailField.errors?.maxlength" class="p-error">
+                Máximo 40 carácteres
+            </small>
+            <small *ngIf="emailField.errors?.minlength" class="p-error">
+                Mínimo 3 carácteres
+              </small>
+        </div>
+        </div>
+        <div class="p-field">
+            <label for="id">AGE</label>
+            <input pInputText type="text" id="age" formControlName="age" >
+        </div>
+        <div class="p-field">
+            <label for="id">IDENTIFICATION</label>
+            <input pInputText type="text" id="identification" formControlName="identification" >
+        </div>
+        <div class="p-field">
+            <button pButton type="submit" label="Guardar" icon="pi pi-save" (click)="onSubmit()"></button>
+        </div>
+    </form>    
+</div>
+
+</p-card>
 <br>
 <h1>Lines</h1>
-{{lines | json}}
+<table>
+    <tr>
+        <th>
+            id
+        </th>
+        <th>
+            names
+        </th>
+    </tr>
+    <tr *ngFor="let line of lines">
+        <td>
+            {{line.id}}
+        </td>
+        <td>
+            {{line.names}}
+        </td>
+        <td>
+            <button pButton type="button" label="Mostrar" (click)="selectLine(line)"></button>
+            <button pButton type="button" label="Modificar" class="p-button-warning" (click)="updateLine(line)"></button>
+            <button pButton type="button" label="Eliminar" class="p-button-danger" (click)="deleteLine(line)"></button>
+        </td>
+    </tr>
+</table>
 

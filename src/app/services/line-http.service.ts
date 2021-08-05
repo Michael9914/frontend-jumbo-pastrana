@@ -15,7 +15,7 @@ export class LineHttpService {
   }
 
   getOne(id: number) {
-    const url = 'http://backend-jumbo-pastrana.test/api/v1/authentication/lines' + id;
+    const url = 'http://backend-jumbo-pastrana.test/api/v1/authentication/lines/' + id;
     return this.httpClient.get(url);
   }
 
@@ -24,12 +24,12 @@ export class LineHttpService {
     return this.httpClient.post(url, line);
   }
 
-  update(id: number, line: LineModel) {
+  update(id: number | undefined, line: LineModel) {
     const url = 'http://backend-jumbo-pastrana.test/api/v1/authentication/lines/' + id;
     return this.httpClient.put(url, line);
   }
 
-  delete(id: number) {
+  delete(id: number | undefined) {
     const url = 'http://backend-jumbo-pastrana.test/api/v1/authentication/lines/' + id;
     return this.httpClient.delete(url);
   }
