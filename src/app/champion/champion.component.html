@@ -5,16 +5,16 @@
         Formulario Reactivo
     </ng-template>
 <div class="p-fluid">
-    <form [formGroup]="formChampion" (ngSubmit)="onSubmit()">
-        <div class="p-field">
+    <form [formGroup]="formChampion" (ngSubmit)="onSubmit(formChampion.value)">
+        <div class="formgrid grid"></div>
+        <div class="field xl:col-6 lg:col-6 nd:col-4 sn:col-12">
             <label for="id">ID</label>
             <input pInputText type="text" id="id" formControlName="id">
         </div>
-        <div class="p-field">
-            <label for="id">CODE</label>
+        <div class="field xl:col-6 lg:col-6 nd:col-4 sn:col-12">
+            <label for="code">CODE</label>
             <input pInputText type="text" id="code" formControlName="code">
-            <div
-                *ngIf="codeField.invalid && (codeField.touched || codeField.dirty)">
+            <div *ngIf="codeField.invalid && (codeField.touched || codeField.dirty)">
                 <small *ngIf="codeField.errors?.required" class="p-error">
                     El campo es requerido
                 </small>
@@ -26,42 +26,73 @@
                   </small>
             </div>
         </div>
-        <div class="p-field">
-            <label for="id">DATE</label>
-            <input pInputText type="text" id="date" formControlName="date">
+        <div class="formgrid grid">
+            <div class="field xl:col-6 lg:col-6 nd:col-4 sn:col-12">
+            <label for="date">DATE</label>
+            <p-calendar id="date" formControllName="date" dateFormat="yy.mm.dd"></p-calendar>
+            <div *ngIf="dateField.invalid && (dateField.touched || dateField.dirty)">
+                <small *ngIf="dateField.errors?.required" class="p-error">
+                    El campo es requerido
+                </small>
+            </div>
+            </div>    
         </div>
-        <div class="p-field">
-            <label for="id">DESCRIPTION</label>
+        <div class="field xl:col-6 lg:col-6 nd:col-4 sn:col-12">
+            <label for="description">DESCRIPTION</label>
             <input pInputText type="text" id="description" formControlName="description">
-        </div>
-        <div class="p-field">
-            <label for="id">APPROVED</label>
-            <input pInputText type="text" id="approved" formControlName="approved">
-        </div>
-        <div class="p-field">
-            <label for="id">TITLE</label>
-            <input pInputText type="text" id="title" formControlName="title">
-            <div
-                *ngIf="codeField.invalid && (codeField.touched || codeField.dirty)">
-                <small *ngIf="codeField.errors?.required" class="p-error">
+            <div *ngIf="descriptionField.invalid && (descriptionField.touched || descriptionField.dirty)">
+                <small *ngIf="descriptionField.errors?.required" class="p-error">
                     El campo es requerido
                 </small>
-                <small *ngIf="codeField.errors?.maxlength" class="p-error">
-                    Máximo 5 carácteres
-                </small>
-                <small *ngIf="codeField.errors?.minlength" class="p-error">
-                    Mínimo 3 carácteres
-                  </small>
             </div>
         </div>
-        <div class="p-field">
-            <button pButton type="submit" label="Guardar" icon="pi pi-save" (click)="onSubmit()"></button>
+        <div class="field xl:col-6 lg:col-6 nd:col-4 sn:col-12">
+            <label for="approved">APPROVED</label>
+            <p-inputSwitch id="approved" formControlName="approved"></p-inputSwitch>
+        </div>
+        <div class="field">
+            <label for="title">TITLE</label>
+            <input pInputText type="text" id="title" formControlName="title">
+            <div *ngIf="titleField.invalid && (titleField.touched || titleField.dirty)">
+                <small *ngIf="titleField.errors?.required" class="p-error">
+                    El campo es requerido
+                </small>
+            </div>
+        </div>
+        <div class="field">
+            <button pButton type="submit" label="Guardar" icon="pi pi-save"></button>
         </div>
     </form>
 </div>
 </p-card>
-<br>
-<h1>Champions</h1>
+
+<p-table id="championsTable"[value]="champions" styleClass="p-datatable-striped">
+    <ng-template pTemplate="header">
+        <tr>
+            <th>ID</th>
+            <th pSortableColumn="code">Code <p-sortIcon field="code"></p-sortIcon></th>
+            <th pSortableColumn="title">Title <p-sortIcon field="title"></p-sortIcon></th>
+            <th pSortableColumn="title">Description <p-sortIcon field="description"></p-sortIcon></th>
+            <th pSortableColumn="approved">Approved <p-sortIcon field="approved"></p-sortIcon></th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-champion>
+        <tr>
+            <td>{{champion.id}}</td>
+            <td>{{champion.code}}</td>
+            <td>{{champion.title}}</td>
+            <td>{{champion.description}}</td>
+            <td>{{champion.approved}}</td>
+        <td>
+            <button pButton type="button" icon="pi pi-eye" (click)="selectChampion(champion)"></button>
+            <button pButton type="button" class="p-button-danger ml-2"  icon="pi pi-trash" (click)="deleteChampion(champion)"></button>
+        </td>    
+        </tr>
+    </ng-template>
+</p-table>
+
+<h1>Projects</h1>
+
 <table>
     <tr>
         <th>
@@ -80,7 +111,6 @@
         </td>
         <td>
             <button pButton type="button" label="Mostrar" (click)="selectChampion(champion)"></button>
-            <button pButton type="button" label="Modificar" class="p-button-warning" (click)="updateChampion(champion)"></button>
             <button pButton type="button" label="Eliminar" class="p-button-danger" (click)="deleteChampion(champion)"></button>
         </td>
     </tr>
